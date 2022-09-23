@@ -29,6 +29,8 @@ export const UserStorage = ({ children }) => {
                     setLoading(false)
 
                 }
+            } else {
+              setLoading(false)
             }
 
         }
