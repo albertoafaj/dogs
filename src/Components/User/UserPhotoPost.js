@@ -20,13 +20,14 @@ const UserPhotoPost = () => {
     if (data) navigate('/conta')
   },[data, navigate])
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData();
     formData.append('img', img.raw);
     formData.append('nome', nome.value);
     formData.append('peso', peso.value);
     formData.append('idade', idade.value);
+    console.log(formData);
     const token = window.localStorage.getItem('token');
     const { url, options } = PHOTO_POST(formData, token)
     request(url, options);
@@ -52,7 +53,7 @@ const UserPhotoPost = () => {
           id="img"
           onChange={handleImgChange}
         />
-        { loading ? <Button disabled>Enviando...</Button>: <Button>Enviar</Button>}
+        { loading ? (<Button disabled>Enviando...</Button>): (<Button>Enviar</Button>)}
         <Error error={error}/> 
       </form>
       <div>
@@ -63,6 +64,7 @@ const UserPhotoPost = () => {
           >
           </div>
         )}
+        <p>{`${nome.value}, ${peso.value}, ${idade.value}`}</p>
       </div>
     </section>
   )
