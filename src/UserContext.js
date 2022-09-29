@@ -12,30 +12,7 @@ export const UserStorage = ({ children }) => {
     const [error, setError] = React.useState(null);
     const navigate = useNavigate();
 
-    React.useEffect(() => {
-        async function autoLogin() {
-            const token = window.localStorage.getItem('token');
-            if(token){
-                try {
-                    setError(null);
-                    setLoading(true);
-                    const {url, options} = TOKEN_VALIDATE_POST(token);
-                    const response = await fetch(url, options)
-                    if(!response.ok) throw new Error('Token inválido')
-                    await getUser(token)
-                } catch (error) {
-                    
-                } finally {
-                    setLoading(false)
-
-                }
-            } else {
-              setLoading(false)
-            }
-
-        }
-        autoLogin();
-    }, [])
+    
 
     const userLogout = React.useCallback(
         async function () {
@@ -75,6 +52,34 @@ export const UserStorage = ({ children }) => {
           setLoading(false);
         }
       }
+
+      React.useEffect(() => {
+        async function autoLogin() {
+            const token = window.localStorage.getItem('token');
+            if(token){
+                try {
+                    setError(null);
+                    setLoading(true);
+                    const {url, options} = TOKEN_VALIDATE_POST(token);
+                    const response = await fetch(url, options)
+                    if(!response.ok) throw new Error('Token inválido')
+                    await getUser(token)
+                } catch (error) {
+                  userLogout();
+                } finally {
+                    setLoading(false)
+
+
+                }
+            } else {
+              setLoading(false)
+            }
+
+        }
+        autoLogin();
+    }, [userLogout])
+
+    
     return (
         <UserContext.Provider value={{ userLogin, userLogout, data, error, loading, login }}>
             {children}

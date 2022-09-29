@@ -6,12 +6,10 @@ import styles from './PhotoDelete.module.css'
 const PhotoDelete = ({ id }) => {
   const { loading, request } = useFetch();
 
-  const token = window.localStorage.getItem('token')
-
-  async function handleClick(event) {
+    async function handleClick(event) {
     const confirm = window.confirm('Tem certeza que deseja deletar?');
     if (confirm) {
-      const { url, options } = PHOTO_DELETE(id, token);
+      const { url, options } = PHOTO_DELETE(id);
       const { response } = await request(url, options);
       if (response.ok) window.location.reload();
     };
