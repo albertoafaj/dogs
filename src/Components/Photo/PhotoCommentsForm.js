@@ -14,9 +14,10 @@ const PhotoCommentsForm = ({id, setComments}) => {
     event.preventDefault();
     const {url, options} = COMMENT_POST(id,{comment}, token);
     const {response, json} = await request(url,options);
+    console.log(response);
     if(response.ok) {
-      setComments((comments) => [...comments, json]);
       setComment('');
+      setComments((comments) => [...comments, json]);
     }
 
   }
@@ -28,7 +29,7 @@ const PhotoCommentsForm = ({id, setComments}) => {
         value={comment}
         onChange={({ target }) => setComment(target.value)}
         placeholder="Comente.."
-        name="comment" id="comment"
+        name={comment} id={comment}
       ></textarea>
       <button className={styles.button}>
         <Enviar />
