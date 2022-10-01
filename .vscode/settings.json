@@ -4,9 +4,9 @@
     "node_modules": true,
     ".vscode": false,
     ".gitignore": true,
-    "package.json": true,
+    "package.json": false,
     "package-lock.json": true,
-    "public": true,
+    "public": false,
     "bkp": false
   },
   "emmet.includeLanguages": {
