@@ -3,11 +3,12 @@
   "files.exclude": {
     "node_modules": true,
     ".vscode": false,
-    ".gitignore": true,
+    ".gitignore": false,
     "package.json": false,
     "package-lock.json": true,
     "public": false,
-    "bkp": false
+    "bkp": false,
+    "build": true
   },
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
