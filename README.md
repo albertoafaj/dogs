@@ -15,7 +15,7 @@ Desenvolvido como parte do curso de React Completo da Origamid, com o objetivo d
 
 ## Demo:
 
-![Dogs - Rede social para cachorros](dogs.png)
+![Dogs - Rede social para cachorros](dogs.PNG)
 
 ## Instação:
 
