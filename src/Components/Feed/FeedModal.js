@@ -4,20 +4,22 @@ import Error from '../Helper/Error';
 import Loading from '../Helper/Loading';
 import PhotoContent from '../Photo/PhotoContent';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPhoto } from '../../Store/photo';
+import { closeModal } from '../../Store/ui';
 
-const FeedModal = ({ photo, setModalPhoto }) => {
+const FeedModal = () => {
+  const { modal } = useSelector((state) => state.ui);
   const { loading, error, data } = useSelector((state) => state.photo);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(fetchPhoto(photo.id));
-  }, [dispatch, photo]);
-
   function handleOutsideClick(event) {
-    if (event.target === event.currentTarget) setModalPhoto(null);
+    if (event.target === event.currentTarget) dispatch(closeModal());
   }
 
+  React.useEffect(() => {
+    dispatch(closeModal());
+  }, [dispatch]);
+
+  if (!modal) return null;
   return (
     <div className={styles.modal} onClick={handleOutsideClick}>
       {error && <Error error={error} />}

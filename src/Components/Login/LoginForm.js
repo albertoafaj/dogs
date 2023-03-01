@@ -1,24 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Button from "../Forms/Button";
-import Input from "../Forms/Input";
-import { UserContext } from "../../UserContext";
-import Error from "../Helper/Error";
-import useForm from "../../Hooks/useForm";
-import styles from "./LoginForm.module.css";
-import stylesBtn from "../Forms/Button.module.css";
-import Head from "../Helper/Head";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Input from '../Forms/Input';
+import Button from '../Forms/Button';
+import useForm from '../../Hooks/useForm';
+import Error from '../Helper/Error';
+import styles from './LoginForm.module.css';
+import stylesBtn from '../Forms/Button.module.css';
+import Head from '../Helper/Head';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogin } from '../../Store/user';
 
 const LoginForm = () => {
-  const { userLogin, error, loading } = React.useContext(UserContext);
   const username = useForm();
   const password = useForm();
+
+  const dispatch = useDispatch();
+  const { token, user } = useSelector((state) => state);
+  const loading = token.loading || user.loading;
+  const error = token.error || user.error;
 
   async function handleSubmit(event) {
     event.preventDefault();
 
     if (username.validate() && password.validate()) {
-      userLogin(username.value, password.value);
+      dispatch(
+        userLogin({ username: username.value, password: password.value }),
+      );
     }
   }
 
@@ -34,12 +41,11 @@ const LoginForm = () => {
         ) : (
           <Button>Entrar</Button>
         )}
-        {error && <Error error={error && 'Dados incorretos'} />}
+        <Error error={error && 'Dados incorretos.'} />
       </form>
       <Link className={styles.perdeu} to="/login/perdeu">
         Perdeu a Senha?
       </Link>
-
       <div className={styles.cadastro}>
         <h2 className={styles.subtitle}>Cadastre-se</h2>
         <p>Ainda não possui conta? Cadastre-se no site.</p>
